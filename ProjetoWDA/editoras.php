@@ -1,3 +1,14 @@
+<?php
+session_start();
+
+// Verifica se o usuário está logado
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    // Se o usuário não estiver logado, redireciona para a página de login
+    header('Location: login.php');
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +19,7 @@
     <title>BiblioPedro</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg bg-light">
+<nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
           <a class="navbar-brand" href="index.html">BiblioPedro</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -16,10 +27,11 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-              <a class="nav-link" href="usuarios.php">Usuários</a>
-			  <a class="nav-link" href="livros.php">Livros</a>
-			  <a class="nav-link" href="emprestimos.php">Empréstimos</a>
-              <a class="nav-link" href="editoras.php">Editoras</a>
+              <a class="nav-link btn btn-light" href="usuarios.php">Usuários</a>
+			  <a class="nav-link btn btn-light" href="livros.php">Livros</a>
+			  <a class="nav-link btn btn-light" href="emprestimos.php">Empréstimos</a>
+			  <a class="nav-link btn btn-light" href="editoras.php">Editoras</a>
+			  <a class="nav-link btn btn-light" href="logout.php">Sair</a>
             </div>
           </div>
         </div>

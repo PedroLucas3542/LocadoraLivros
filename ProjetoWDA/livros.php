@@ -1,3 +1,14 @@
+<?php
+session_start();
+
+// Verifica se o usuário está logado
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    // Se o usuário não estiver logado, redireciona para a página de login
+    header('Location: login.php');
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,10 +24,11 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-              <a class="nav-link" href="usuarios.php">Usuários</a>
-			  <a class="nav-link" href="livros.php">Livros</a>
-			  <a class="nav-link" href="emprestimos.php">Empréstimos</a>
-			  <a class="nav-link" href="editoras.php">Editoras</a>
+              <a class="nav-link btn btn-light" href="usuarios.php">Usuários</a>
+			  <a class="nav-link btn btn-light" href="livros.php">Livros</a>
+			  <a class="nav-link btn btn-light" href="emprestimos.php">Empréstimos</a>
+			  <a class="nav-link btn btn-light" href="editoras.php">Editoras</a>
+			  <a class="nav-link btn btn-light" href="logout.php">Sair</a>
             </div>
           </div>
         </div>

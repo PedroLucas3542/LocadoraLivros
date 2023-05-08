@@ -5,7 +5,7 @@ include_once 'conexao.php';
 	$nome 	= isset($_POST['nome']) == true ?$_POST['nome']:"";
 	$email	= isset($_POST['email']) == true ?$_POST['email']:"";
 	$telefone  = isset($_POST['telefone']) == true ?$_POST['telefone']:"";
-    $site  = isset($_POST['site']) == true ?$_POST['data_lancamento']:"";
+    $site  = isset($_POST['site']) == true ?$_POST['site']:"";
 
 	//inserir dados no banco de dados.
 

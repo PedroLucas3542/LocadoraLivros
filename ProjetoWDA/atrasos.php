@@ -32,11 +32,12 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 			  <a class="nav-link btn btn-light" href="emprestimos.php">Empréstimos</a>
 			  <a class="nav-link btn btn-light" href="editoras.php">Editoras</a>
 			  <a class="nav-link btn btn-light" href="atrasos.php">Atrasos</a>
+			  <a class="nav-link btn btn-light" href="dashboard.php" class="dashboard-button">Dashboard</a>
 			  <a class="nav-link btn btn-light" href="logout.php">Sair</a>
             </div>
           </div>
         </div>
-      </nav>
+</nav>
 	  <br><br>
 
 <?php

@@ -74,8 +74,8 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 				echo '<br>';
 				echo '<label for="prazo_entrega">Prazo de Entrega:</label>'; ?>
 
-				 <input type="date" name="prazo_entrega" id="prazo_entrega"><br>';
-				 <br>';
+				 <input type="date" name="prazo_entrega" id="prazo_entrega"><br>
+				 <br>
 
 				 <?php
 				echo '<input type="submit" value="Emprestar"><br><a href="livros.php">Cancelar</a>';

@@ -78,7 +78,8 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 			  <a class="nav-link btn btn-light" href="livros.php">Livros</a>
 			  <a class="nav-link btn btn-light" href="emprestimos.php">Empréstimos</a>
 			  <a class="nav-link btn btn-light" href="editoras.php">Editoras</a>
-              <a class="nav-link btn btn-light" href="atrasos.php">Atrasos</a>
+			  <a class="nav-link btn btn-light" href="atrasos.php">Atrasos</a>
+			  <a class="nav-link btn btn-light" href="dashboard.php" class="dashboard-button">Dashboard</a>
 			  <a class="nav-link btn btn-light" href="logout.php">Sair</a>
             </div>
           </div>
@@ -132,6 +133,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                 echo "<td>" . $row['livro_nome'] . "</td>";
                 echo "<td>" . $row['usuario_nome'] . "</td>";
                 echo "<td>" . $row['data_emprestimo'] . "</td>";
+                echo "<td><a href='devolver.php?id=".$row["id"]."'>Devolução</a></td>";
                 echo "</tr>";
             }
 

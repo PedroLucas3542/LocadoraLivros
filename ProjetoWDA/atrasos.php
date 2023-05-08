@@ -12,12 +12,13 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Lista de Empréstimos</title>
+	<title>Lista de Atrasos</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 <body>
+
 <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
           <a class="navbar-brand" href="index.html">BiblioPedro</a>
@@ -37,52 +38,34 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         </div>
       </nav>
 	  <br><br>
-	<center><h1>Lista de Empréstimos</h1></center><br><br>
-    <div class="container">
-	<a href="pesquisa.php" type="button" class="btn btn-success">Pesquisar Empréstimo</a><br><br>
-	<table class="table">
-		<thead>
-			<tr>
-				<th>ID</th>
-				<th>Id Livro</th>
-                <th>Livro</th>
-				<th>Id Usuário</th>
-                <th>Usuário</th>
-				<th>Prazo</th>
-			</tr>
-		</thead>
-		<tbody>
-			<?php
-				include 'conexao.php';
 
-				// Query SQL para selecionar os empréstimos
-				$sql = "SELECT * FROM emprestimos";
+<?php
+include_once('conexao.php');
 
-				$result = mysqli_query($conn, $sql);
+// Consulta os empréstimos em atraso
+$query_emprestimos = "SELECT * FROM emprestimos WHERE prazo_entrega < CURDATE()";
+$resultado_emprestimos = mysqli_query($conn, $query_emprestimos);
 
-				// Verifica se existem empréstimos cadastrados
-				if (mysqli_num_rows($result) > 0) {
-				    // Loop para imprimir cada empréstimo em uma linha da tabela
-				    while($row = mysqli_fetch_assoc($result)) {
-				        echo "<tr>";
-				        echo "<td>" . $row["id"] . "</td>";
-				        echo "<td>" . $row["livro_id"] . "</td>";
-				        echo "<td>" . $row["livro_nome"] . "</td>";
-				        echo "<td>" . $row["usuario_id"] . "</td>";
-                        echo "<td>" . $row["usuario_nome"] . "</td>";
-				        echo "<td>" . $row["prazo_entrega"] . "</td>";
-                        echo "<td><a href='devolver.php?id=".$row["id"]."'>Devolução</a></td>";
-				        echo "</tr>";
-				    }
-				} else {
-				    echo "Nenhum empréstimo cadastrado.";
-				}
+// Verifica se foram encontrados empréstimos em atraso
+if(mysqli_num_rows($resultado_emprestimos) > 0) {
+    echo "<div class='container'><h2>Empréstimos em atraso:</h2><br><br>";
+    echo "<table class='table'>";
+    echo "<tr><th>ID</th><th>Livro</th><th>Usuário</th><th>Data de Empréstimo</th><th>Prazo de Entrega</th></tr>";
 
-				// Fecha a conexão com o banco de dados
-				mysqli_close($conn);
-			?>
-		</tbody>
-	</table>
-    </div>
-</body>
-</html>
+    // Exibe os dados dos empréstimos em atraso
+    while($row = mysqli_fetch_assoc($resultado_emprestimos)) {
+        echo "<tr>";
+        echo "<td>".$row['id']."</td>";
+        echo "<td>".$row['livro_nome']."</td>";
+        echo "<td>".$row['usuario_nome']."</td>";
+        echo "<td>".$row['data_emprestimo']."</td>";
+        echo "<td>".$row['prazo_entrega']."</td>";
+        echo "<td><a href='devolver.php?id=".$row["id"]."'>Devolução</a></td>";
+        echo "</tr>";
+    }
+
+    echo "</table></div>";
+} else {
+    echo "<div class='container'><center><p>Nenhum empréstimo em atraso encontrado.</p></center></div>";
+}
+?>

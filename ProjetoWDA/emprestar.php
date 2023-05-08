@@ -14,6 +14,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 <head>
 	<title>Empréstimo de Livro</title>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
+
 </head>
 <body>
 
@@ -71,9 +72,12 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
 				echo '</select><br>';
 				echo '<br>';
-				echo '<label for="prazo_entrega">Prazo de Entrega:</label>';
-				echo '<input type="date" name="prazo_entrega" id="prazo_entrega"><br>';
-				echo '<br>';
+				echo '<label for="prazo_entrega">Prazo de Entrega:</label>'; ?>
+
+				 <input type="date" name="prazo_entrega" id="prazo_entrega"><br>';
+				 <br>';
+
+				 <?php
 				echo '<input type="submit" value="Emprestar"><br><a href="livros.php">Cancelar</a>';
 				echo '</form></center>';
 			} else {
@@ -86,6 +90,20 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 			echo "<p>ID inválido.</p>";
 		}
 	?>
+<script>
+			const dataDevolucaoInput = document.getElementById('prazo_entrega');
+			const prazoDias = 30; // Prazo de devolução em dias
 
+		dataDevolucaoInput.addEventListener('change', function() {
+		const dataDevolucao = new Date(this.value);
+		const dataLimite = new Date();
+		dataLimite.setDate(dataLimite.getDate() + prazoDias);
+
+		if (dataDevolucao > dataLimite) {
+			alert('O prazo máximo para devolução é de 30 dias. Por favor, selecione uma data anterior.');
+			this.value = ''; // Limpa o campo de data
+		}
+		});
+</script>
 </body>
 </html>

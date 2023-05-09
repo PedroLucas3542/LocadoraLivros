@@ -14,6 +14,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 <head>
 	<title>Lista de Livros</title>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="style.css">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-light">
@@ -38,7 +39,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 	  <br><br>
 	<center><h1>Lista de Livros</h1></center><br><br>
 	<div class="container">
-	<a href="adicionarlivro.php" type="button" class="btn btn-success">Adicionar Livro</a><br><br>
+	<a href="adicionarlivro.php"><button type="button" class="button-background-move">Adicionar Livro</button></a><br><br>
 	<table class="table">
 		<tr>
 			<th>ID</th>

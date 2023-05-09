@@ -96,12 +96,12 @@ $resultado_atrasados = mysqli_query($conn, $query_atrasados);
 $livros_atrasados = mysqli_fetch_assoc($resultado_atrasados)['total_atrasados'];
 
 // Quantidade de livros devolvidos dentro do prazo
-$query_devolvidos_prazo = "SELECT COUNT(*) AS total_devolvidos_prazo FROM emprestimos WHERE data_devolucao <= prazo_entrega";
+$query_devolvidos_prazo = "SELECT COUNT(*) AS total_devolvidos_prazo FROM devolvidos";
 $resultado_devolvidos_prazo = mysqli_query($conn, $query_devolvidos_prazo);
 $livros_devolvidos_prazo = mysqli_fetch_assoc($resultado_devolvidos_prazo)['total_devolvidos_prazo'];
 
 // Quantidade de livros devolvidos fora do prazo
-$query_devolvidos_fora_prazo = "SELECT COUNT(*) AS total_devolvidos_fora_prazo FROM emprestimos WHERE data_devolucao > prazo_entrega";
+$query_devolvidos_fora_prazo = "SELECT COUNT(*) AS total_devolvidos_fora_prazo FROM devolvidos";
 $resultado_devolvidos_fora_prazo = mysqli_query($conn, $query_devolvidos_fora_prazo);
 $livros_devolvidos_fora_prazo = mysqli_fetch_assoc($resultado_devolvidos_fora_prazo)['total_devolvidos_fora_prazo'];
 

@@ -17,6 +17,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <title>BiblioPedro</title>
+	<link rel="stylesheet" href="style.css">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-light">
@@ -38,11 +39,12 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
           </div>
         </div>
       </nav>
+	  <div class="fundo">
 	  <br><br>
 	  <div class="container">
       <center><h1>Lista de Usuários</h1></center>
 	  <br>
-	  <a href="adicionar.php" type="button" class="btn btn-success">Adicionar Usuário</a><br><br>
+	  <a href="adicionar.php"><button type="button" class="button-background-move">Adicionar Usuário</button></a><br><br>
 	<table class="table">
 		<tr>
 			<th>ID</th>
@@ -80,6 +82,6 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 		?>
 	</table>	
 	</div>	
-	
+	</div>
 </body>
 </html>

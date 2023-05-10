@@ -19,7 +19,9 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 <body>
 <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
-          <a class="navbar-brand" href="index.html">BiblioPedro</a>
+		<a class="navbar-brand" href="#">
+      		<img src="logo.png" alt="Bootstrap" width="90" height="72">
+    	</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -40,7 +42,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 	<center><h1>Lista de Livros</h1></center><br><br>
 	<div class="container">
 	<a href="adicionarlivro.php"><button type="button" class="button-background-move">Adicionar Livro</button></a><br><br>
-	<table class="table">
+	<table class="table table-warning table-striped">
 		<tr>
 			<th>ID</th>
 			<th>Nome</th>

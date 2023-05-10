@@ -21,7 +21,9 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
 <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
-          <a class="navbar-brand" href="index.html">BiblioPedro</a>
+		<a class="navbar-brand" href="#">
+      		<img src="logo.png" alt="Bootstrap" width="90" height="72">
+    	</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -37,7 +39,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
             </div>
           </div>
         </div>
-</nav>
+      </nav>
 	  <br><br>
 
 <?php
@@ -50,7 +52,7 @@ $resultado_emprestimos = mysqli_query($conn, $query_emprestimos);
 // Verifica se foram encontrados empréstimos em atraso
 if(mysqli_num_rows($resultado_emprestimos) > 0) {
     echo "<div class='container'><h2>Empréstimos em atraso:</h2><br><br>";
-    echo "<table class='table'>";
+    echo "<table class='table table-danger table-striped'>";
     echo "<tr><th>ID</th><th>Livro</th><th>Usuário</th><th>Data de Empréstimo</th><th>Prazo de Entrega</th></tr>";
 
     // Exibe os dados dos empréstimos em atraso

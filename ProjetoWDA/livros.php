@@ -15,6 +15,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 	<title>Lista de Livros</title>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="style.css">
+	<script src="js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-light">
@@ -41,7 +42,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 	  <br><br>
 	<center><h1>Lista de Livros</h1></center><br><br>
 	<div class="container">
-	<a href="adicionarlivro.php"><button type="button" class="button-background-move">Adicionar Livro</button></a><br><br>
+	<a href="adicionarlivro.php"><button type="button" class="button-background-move">Adicionar Livro</button> - <a href="pesquisarlivros.php"><button type="button" class="button-background-move">Pesquisar Livro</button></a><br><br>
 	<table class="table table-warning table-striped">
 		<tr>
 			<th>ID</th>
@@ -70,7 +71,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 				echo "<td>".$row["editora"]."</td>";
 				echo "<td>".$row["data_lancamento"]."</td>";
 				echo "<td>".$row["estoque"]."</td>";
-				echo "<td><a href='emprestar.php?id=".$row["id"]."' class='btn btn-info'>Emprestar</a> | <a href='editarlivro.php?id=".$row["id"]."' class='btn btn-danger'>Editar</a></td>";
+				echo "<td><a href='emprestar.php?id=".$row["id"]."' class='btn btn-info'>Emprestar</a> | <a href='editarlivros.php?id=".$row["id"]."' class='btn btn-warning'>Editar</a> | <a href='excluirlivro.php?id=".$row["id"]."' class='btn btn-danger'>Excluir</a></td>";
 				echo "</tr>";
 			}
 

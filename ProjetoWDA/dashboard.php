@@ -10,6 +10,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 ?>
 
 <link rel="stylesheet" href="css/bootstrap.min.css">
+<script src="js/bootstrap.bundle.min.js"></script>
 <style>
 .dashboard {
   width: 80%;
@@ -65,7 +66,9 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 </style>
 <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
-          <a class="navbar-brand" href="index.html">BiblioPedro</a>
+		<a class="navbar-brand" href="#">
+      		<img src="logo.png" alt="Bootstrap" width="90" height="72">
+    	</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -82,8 +85,9 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
           </div>
         </div>
       </nav>
+	  <br><br>
 
-<?php
+      <?php
 include_once('conexao.php');
 
 // Quantidade de livros emprestados
@@ -124,19 +128,21 @@ $resultado_livro_mais_alugado = mysqli_query($conn, $query_livro_mais_alugado);
 // Recupera o nome do livro mais alugado
 $query_nome_livro_mais_alugado = "SELECT nome FROM livros WHERE id = $livro_mais_alugado_id";
 $resultado_nome_livro_mais_alugado = mysqli_query($conn, $query_nome_livro_mais_alugado);
-@$livro_mais_alugado_nome = mysqli_fetch_assoc($resultado_nome_livro_mais_alugado)['nome'];
+$livro_mais_alugado_nome = '';
+if ($resultado_nome_livro_mais_alugado) {
+    $livro_mais_alugado_nome = mysqli_fetch_assoc($resultado_nome_livro_mais_alugado)['nome'];
+}
 
 // Quantidade de livros devolvidos
 $query_devolvidos = "SELECT COUNT(*) AS total_devolvidos FROM devolvidos";
 $resultado_devolvidos = mysqli_query($conn, $query_devolvidos);
 $livros_devolvidos = mysqli_fetch_assoc($resultado_devolvidos)['total_devolvidos'];
 
-
 // Exibir as informações no dashboard
 echo "<br><div class='dashboard'>";
 echo "<center><h2>Dashboard</h2><br>";
 
-if ($livros_emprestados > 0) {
+if (isset($livros_emprestados) && $livros_emprestados > 0) {
     echo "<div class='widget primary'>";
     echo "<p class='widget-title'>Quantidade de livros emprestados</p>";
     echo "<p class='widget-value'><strong>$livros_emprestados</strong></p>";
@@ -147,7 +153,7 @@ if ($livros_emprestados > 0) {
     echo "</div>";
 }
 
-if ($livros_atrasados > 0) {
+if (isset($livros_atrasados) && $livros_atrasados > 0) {
     echo "<div class='widget warning'>";
     echo "<p class='widget-title'>Quantidade de livros atrasados</p>";
     echo "<p class='widget-value'><strong>$livros_atrasados</strong></p>";
@@ -158,7 +164,7 @@ if ($livros_atrasados > 0) {
     echo "</div>";
 }
 
-if ($livros_devolvidos_prazo > 0) {
+if (isset($livros_devolvidos_prazo) && $livros_devolvidos_prazo > 0) {
     echo "<div class='widget success'>";
     echo "<p class='widget-title'>Quantidade de livros devolvidos dentro do prazo</p>";
     echo "<p class='widget-value'><strong>$livros_devolvidos_prazo</strong></p>";
@@ -169,7 +175,7 @@ if ($livros_devolvidos_prazo > 0) {
     echo "</div>";
 }
 
-if ($livros_devolvidos_fora_prazo > 0) {
+if (isset($livros_devolvidos_fora_prazo) && $livros_devolvidos_fora_prazo > 0) {
     echo "<div class='widget error'>";
     echo "<p class='widget-title'>Quantidade de livros devolvidos fora do prazo</p>";
     echo "<p class='widget-value'><strong>$livros_devolvidos_fora_prazo</strong></p>";
@@ -182,23 +188,36 @@ if ($livros_devolvidos_fora_prazo > 0) {
 
 echo "<div class='widget'>";
 echo "<h3 class='widget-subtitle'>Quantidade de aluguéis por usuário</h3>";
-foreach ($alugueis_por_usuario as $usuario_id => $total_alugueis) {
-    echo "<p class='widget-item'>Usuário ID $usuario_id: <strong>$total_alugueis</strong> aluguéis</p>";
+if (!empty($alugueis_por_usuario)) {
+    foreach ($alugueis_por_usuario as $usuario_id => $total_alugueis) {
+        echo "<p class='widget-item'>Usuário ID $usuario_id: <strong>$total_alugueis</strong> aluguéis</p>";
+    }
+} else {
+    echo "<p class='widget-title'>Não há informações disponíveis.</p>";
 }
 echo "</div>";
 
 echo "<div class='widget utilitary'>";
 echo "<h3 class='widget-subtitle'>Livro mais alugado</h3>";
-echo "<p class='widget-value'><strong>$livro_mais_alugado_nome</strong></p>";
+if (!empty($livro_mais_alugado_nome)) {
+    echo "<p class='widget-value'><strong>$livro_mais_alugado_nome</strong></p>";
+} else {
+    echo "<p class='widget-title'>Não há informações disponíveis.</p>";
+}
 echo "</div>";
 
-echo "<div class='widget'>";
-echo "<h3 class='widget-title'>Quantidade de livros devolvidos</h3>";
-echo "<p class='widget-value'><strong>$livros_devolvidos</strong></p>";
-echo "</div>";
+if (isset($livros_devolvidos) && $livros_devolvidos > 0) {
+    echo "<div class='widget'>";
+    echo "<h3 class='widget-title'>Quantidade de livros devolvidos</h3>";
+    echo "<p class='widget-value'><strong>$livros_devolvidos</strong></p>";
+    echo "</div>";
+} else {
+    echo "<div class='widget'>";
+    echo "<p class='widget-title'>Não há livros devolvidos.</p>";
+    echo "</div>";
+}
 
 echo "</center></div>";
 
 
 
-?>

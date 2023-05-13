@@ -14,6 +14,8 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 <head>
     <title>Pesquisar Empréstimos</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
+	<script src="js/bootstrap.bundle.min.js"></script>
+    <head>
     <style>
         body {
             font-family: Arial, sans-serif;

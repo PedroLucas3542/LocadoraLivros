@@ -12,12 +12,10 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <title>Usuários</title>
+	<title>Usuários</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="style.css">
+	<script src="js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-light">
@@ -46,7 +44,8 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 	  <div class="container">
       <center><h1>Lista de Usuários</h1></center>
 	  <br>
-	  <a href="adicionar.php"><button type="button" class="button-background-move">Adicionar Usuário</button></a><br><br>
+	  <a href="adicionar.php"><button type="button" class="button-background-move">Adicionar Usuário</button> - <a href="pesquisarusuario.php"><button type="button" class="button-background-move">Pesquisar Usuário</button></a><br>
+	  <br>
 	<table class="table table-success table-striped">
 		<tr>
 			<th>ID</th>
@@ -81,6 +80,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 			}
 			// Fechar conexão
 			mysqli_close($conn);
+
 		?>
 	</table>	
 	</div>	

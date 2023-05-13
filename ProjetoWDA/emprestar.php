@@ -12,9 +12,10 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Empréstimo de Livro</title>
+	<title>Emprestar</title>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
-
+	<link rel="stylesheet" href="style.css">
+	<script src="js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 
@@ -26,17 +27,8 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 			$id = $_GET['id'];
 
 			// Conecta ao banco de dados
-			$servername = "localhost";
-			$username = "root";
-			$password = "";
-			$dbname = "wda";
+			include 'conexao.php';
 
-			$conn = new mysqli($servername, $username, $password, $dbname);
-
-			// Verifica se a conexão foi estabelecida corretamente
-			if ($conn->connect_error) {
-				die("Connection failed: " . $conn->connect_error);
-			}
 
 			// Seleciona o livro com o ID correspondente
 			$sql = "SELECT * FROM livros WHERE id = " . $id;

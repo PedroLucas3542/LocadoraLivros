@@ -74,7 +74,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 				        echo "<td>" . $row["usuario_id"] . "</td>";
                         echo "<td>" . $row["usuario_nome"] . "</td>";
 				        echo "<td>" . $row["prazo_entrega"] . "</td>";
-                        echo "<td><a href='devolver.php?id=".$row["id"]."'>Devolução</a></td>";
+                        echo "<td><a href='devolver.php?id=".$row["id"]."'><button type='button' class='btn btn-secondary'>Devolver</button></a></td>";
 				        echo "</tr>";
 				    }
 				} else {

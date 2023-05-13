@@ -44,7 +44,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 	  <div class="container">
       <center><h1>Lista de Usuários</h1></center>
 	  <br>
-	  <a href="adicionar.php"><button type="button" class="button-background-move">Adicionar Usuário</button> - <a href="pesquisarusuario.php"><button type="button" class="button-background-move">Pesquisar Usuário</button></a><br>
+	  <a href="adicionar.php"><button type="button" class="button-background-move">Adicionar Usuário</button></a> - <a href="pesquisarusuario.php"><button type="button" class="button-background-move">Pesquisar Usuário</button></a><br>
 	  <br>
 	<table class="table table-success table-striped">
 		<tr>

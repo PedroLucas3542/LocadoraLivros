@@ -43,7 +43,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 	  <div class="container">
       <center><h1>Lista de Editoras</h1></center>
 	  <br>
-	  <a href="adicionareditora.php"><button type="button" class="button-background-move">Adicionar Editora</button></a><br><br>
+	  <a href="adicionareditora.php"><button type="button" class="button-background-move">Adicionar Editora</button></a> - <a href="pesquisaeditoras.php"><button type="button" class="button-background-move">Pesquisar Editoras</button></a><br><br>
 	<table class="table table-secondary table-striped">
 		<tr>
 			<th>ID</th>
@@ -67,6 +67,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 					echo "<td>".$row["email"]."</td>";
 					echo "<td>".$row["telefone"]."</td>";
 					echo "<td>".$row["site"]."</td>";
+					echo "<td><a href='editaeditora.php?id=".$row["id"]."' class='btn btn-warning'>Editar</a> | <a href='excluir.php?id=".$row["id"]."' class='btn btn-danger'>Excluir</a></td>";
 					echo "</tr>";
 				}
 			} else {

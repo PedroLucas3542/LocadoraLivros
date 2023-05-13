@@ -63,7 +63,7 @@ if(mysqli_num_rows($resultado_emprestimos) > 0) {
         echo "<td>".$row['usuario_nome']."</td>";
         echo "<td>".$row['data_emprestimo']."</td>";
         echo "<td>".$row['prazo_entrega']."</td>";
-        echo "<td><a href='devolver.php?id=".$row["id"]."'>Devolução</a></td>";
+        echo "<td><a href='devolver.php?id=".$row["id"]."'><button type='button' class='btn btn-secondary'>Devolver</button></a></td>";
         echo "</tr>";
     }
 

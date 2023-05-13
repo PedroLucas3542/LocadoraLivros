@@ -66,9 +66,9 @@
           </div>
         </div>
       </nav><br><br>
-    <h2>Pesquisa de Usuários</h2>
+    <h2>Pesquisa de Editoras</h2>
     <form method="GET" action="">
-        <input type="text" name="nome" placeholder="Digite o nome do usuário">
+        <input type="text" name="nome" placeholder="Digite o nome da editora">
         <input type="submit" value="Pesquisar">
     </form>
 
@@ -81,7 +81,7 @@
         include 'conexao.php';
 
         // Constrói a consulta SQL
-        $query = "SELECT * FROM usuarios WHERE nome LIKE '%$nome%'";
+        $query = "SELECT * FROM editoras WHERE nome LIKE '%$nome%'";
 
         // Executa a consulta
         $result = mysqli_query($conn, $query);
@@ -93,6 +93,7 @@
                         <th>Nome</th>
                         <th>E-mail</th>
                         <th>Telefone</th>
+                        <th>Site</th>
                     </tr>";
 
             // Exibe os resultados
@@ -100,13 +101,14 @@
                 echo "<tr>
                         <td>" . $row['nome'] . "</td>
                         <td>" . $row['email'] . "</td>
-                        <td>" . $row['celular'] . "</td>
+                        <td>" . $row['telefone'] . "</td>
+                        <td>" . $row['site'] . "</td>
                     </tr>";
             }
 
             echo "</table>";
         } else {
-            echo "Nenhum usuário encontrado.";
+            echo "Nenhuma editora encontrada.";
         }
 
         // Fecha a conexão com o banco de dados

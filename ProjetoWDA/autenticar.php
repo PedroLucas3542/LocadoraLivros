@@ -19,5 +19,6 @@ if ($username === 'admin' && $password === 'senha123') {
 } else {
     // Autenticação falhou
     echo 'Usuário ou senha inválidos.';
+    header('Location: login.php');
 }
 ?>

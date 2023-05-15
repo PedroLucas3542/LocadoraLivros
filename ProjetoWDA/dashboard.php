@@ -65,29 +65,29 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 }
 </style>
 <nav class="navbar navbar-expand-lg bg-light">
-        <div class="container-fluid">
-		<a class="navbar-brand" href="#">
-      		<img src="logo.png" alt="Bootstrap" width="90" height="72">
-    	</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="logo.png" alt="Bootstrap" width="90" height="72">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-              <a class="nav-link btn btn-light" href="usuarios.php">Usuários</a>
-			  <a class="nav-link btn btn-light" href="livros.php">Livros</a>
-			  <a class="nav-link btn btn-light" href="emprestimos.php">Empréstimos</a>
-			  <a class="nav-link btn btn-light" href="editoras.php">Editoras</a>
-			  <a class="nav-link btn btn-light" href="atrasos.php">Atrasos</a>
-			  <a class="nav-link btn btn-light" href="dashboard.php" class="dashboard-button">Dashboard</a>
-			  <a class="nav-link btn btn-light" href="logout.php">Sair</a>
+                <a class="nav-link btn btn-light" href="usuarios.php">Usuários</a>
+                <a class="nav-link btn btn-light" href="livros.php">Livros</a>
+                <a class="nav-link btn btn-light" href="emprestimos.php">Empréstimos</a>
+                <a class="nav-link btn btn-light" href="editoras.php">Editoras</a>
+                <a class="nav-link btn btn-light" href="atrasos.php">Atrasos</a>
+                <a class="nav-link btn btn-light" href="dashboard.php" class="dashboard-button">Dashboard</a>
+                <a class="nav-link btn btn-light" href="logout.php">Sair</a>
             </div>
-          </div>
         </div>
-      </nav>
-	  <br><br>
+    </div>
+</nav>
+<br><br>
 
-      <?php
+<?php
 include_once('conexao.php');
 
 // Quantidade de livros emprestados
@@ -137,87 +137,75 @@ if ($resultado_nome_livro_mais_alugado) {
 $query_devolvidos = "SELECT COUNT(*) AS total_devolvidos FROM devolvidos";
 $resultado_devolvidos = mysqli_query($conn, $query_devolvidos);
 $livros_devolvidos = mysqli_fetch_assoc($resultado_devolvidos)['total_devolvidos'];
+?>
 
-// Exibir as informações no dashboard
-echo "<br><div class='dashboard'>";
-echo "<center><h2>Dashboard</h2><br>";
+<div class="dashboard">
+    <div class="widget primary">
+        <h3>Quantidade de Livros Emprestados</h3>
+        <p><?php echo $livros_emprestados; ?></p>
+    </div>
 
-if (isset($livros_emprestados) && $livros_emprestados > 0) {
-    echo "<div class='widget primary'>";
-    echo "<p class='widget-title'>Quantidade de livros emprestados</p>";
-    echo "<p class='widget-value'><strong>$livros_emprestados</strong></p>";
-    echo "</div>";
-} else {
-    echo "<div class='widget'>";
-    echo "<p class='widget-title'>Não há livros emprestados.</p>";
-    echo "</div>";
-}
+    <div class="widget warning">
+        <h3>Quantidade de Livros Atrasados</h3>
+        <p><?php echo $livros_atrasados; ?></p>
+    </div>
 
-if (isset($livros_atrasados) && $livros_atrasados > 0) {
-    echo "<div class='widget warning'>";
-    echo "<p class='widget-title'>Quantidade de livros atrasados</p>";
-    echo "<p class='widget-value'><strong>$livros_atrasados</strong></p>";
-    echo "</div>";
-} else {
-    echo "<div class='widget'>";
-    echo "<p class='widget-title'>Não há livros atrasados.</p>";
-    echo "</div>";
-}
+    <div class="widget success">
+        <h3>Quantidade de Livros Devolvidos dentro do Prazo</h3>
+        <p><?php echo $livros_devolvidos_prazo; ?></p>
+    </div>
 
-if (isset($livros_devolvidos_prazo) && $livros_devolvidos_prazo > 0) {
-    echo "<div class='widget success'>";
-    echo "<p class='widget-title'>Quantidade de livros devolvidos dentro do prazo</p>";
-    echo "<p class='widget-value'><strong>$livros_devolvidos_prazo</strong></p>";
-    echo "</div>";
-} else {
-    echo "<div class='widget'>";
-    echo "<p class='widget-title'>Não há livros devolvidos no prazo</p>";
-    echo "</div>";
-}
+    <div class="widget error">
+        <h3>Quantidade de Livros Devolvidos fora do Prazo</h3>
+        <p><?php echo $livros_devolvidos_fora_prazo; ?></p>
+    </div>
 
-if (isset($livros_devolvidos_fora_prazo) && $livros_devolvidos_fora_prazo > 0) {
-    echo "<div class='widget error'>";
-    echo "<p class='widget-title'>Quantidade de livros devolvidos fora do prazo</p>";
-    echo "<p class='widget-value'><strong>$livros_devolvidos_fora_prazo</strong></p>";
-    echo "</div>";
-} else {
-    echo "<div class='widget'>";
-    echo "<p class='widget-title'>Não há livros devolvidos fora do prazo</p>";
-    echo "</div>";
-}
+    <div class="widget utilitary">
+        <h3>Quantidade de Aluguéis por Usuário</h3>
+        <div id="alugueisPorUsuarioChart" style="width: 100%; height: 300px;"></div>
+    </div>
 
-echo "<div class='widget'>";
-echo "<h3 class='widget-subtitle'>Quantidade de aluguéis por usuário</h3>";
-if (!empty($alugueis_por_usuario)) {
-    foreach ($alugueis_por_usuario as $usuario_id => $total_alugueis) {
-        echo "<p class='widget-item'>Usuário ID $usuario_id: <strong>$total_alugueis</strong> aluguéis</p>";
-    }
-} else {
-    echo "<p class='widget-title'>Não há informações disponíveis.</p>";
-}
-echo "</div>";
+    <div class="widget">
+        <h3>Livro Mais Alugado</h3>
+        <p><?php echo $livro_mais_alugado_nome; ?></p>
+    </div>
 
-echo "<div class='widget utilitary'>";
-echo "<h3 class='widget-subtitle'>Livro mais alugado</h3>";
-if (!empty($livro_mais_alugado_nome)) {
-    echo "<p class='widget-value'><strong>$livro_mais_alugado_nome</strong></p>";
-} else {
-    echo "<p class='widget-title'>Não há informações disponíveis.</p>";
-}
-echo "</div>";
+    <div class="widget">
+        <h3>Quantidade de Livros Devolvidos</h3>
+        <p><?php echo $livros_devolvidos; ?></p>
+    </div>
+</div>
 
-if (isset($livros_devolvidos) && $livros_devolvidos > 0) {
-    echo "<div class='widget'>";
-    echo "<h3 class='widget-title'>Quantidade de livros devolvidos</h3>";
-    echo "<p class='widget-value'><strong>$livros_devolvidos</strong></p>";
-    echo "</div>";
-} else {
-    echo "<div class='widget'>";
-    echo "<p class='widget-title'>Não há livros devolvidos.</p>";
-    echo "</div>";
-}
+<!-- Include the Charts.js library -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-echo "</center></div>";
+<script>
+    // Aluguéis por Usuário Chart
+    var alugueisPorUsuarioData = {
+        labels: <?php echo json_encode(array_keys($alugueis_por_usuario)); ?>,
+        datasets: [{
+            label: 'Aluguéis',
+            data: <?php echo json_encode(array_values($alugueis_por_usuario)); ?>,
+            backgroundColor: 'rgba(52, 152, 219, 0.5)',
+            borderColor: 'rgba(52, 152, 219, 1)',
+            borderWidth: 1
+        }]
+    };
 
+    var alugueisPorUsuarioOptions = {
+        scales: {
+            y: {
+                beginAtZero: true,
+                precision: 0
+            }
+        }
+    };
 
+    var alugueisPorUsuarioChartElement = document.getElementById('alugueisPorUsuarioChart');
+    var alugueisPorUsuarioChart = new Chart(alugueisPorUsuarioChartElement, {
+        type: 'bar',
+        data: alugueisPorUsuarioData,
+        options: alugueisPorUsuarioOptions
+    });
+</script>
 

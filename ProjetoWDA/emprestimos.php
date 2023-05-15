@@ -42,7 +42,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 	  <br><br>
 	<center><h1>Lista de Empréstimos</h1></center><br><br>
     <div class="container">
-	<a href="pesquisa.php"><button type="button" class="button-background-move">Pesquisar Empréstimo</button></a><br><br>
+	<a href="pesquisa.php"><button type="button" class="button-background-move">Pesquisar Empréstimo</button></a> - <a href="emprestar.php"><button type="button" class="button-background-move">Efetuar Empréstimo</button></a><br><br>
 	<table class="table table-danger table-striped">
 		<thead>
 			<tr>

@@ -66,10 +66,11 @@
           </div>
         </div>
       </nav><br><br>
-    <h2>Pesquisa de Usuários</h2>
+    <h2>Lista de Usuários</h2>
     <form method="GET" action="">
         <input type="text" name="nome" placeholder="Digite o nome do usuário">
-        <input type="submit" value="Pesquisar">
+        <input type="submit" value="Pesquisar"><br><br>
+        <a href="adicionar.php"><button type="button" class="button-background-move">Adicionar Usuário</button></a>
     </form>
 
     <?php
@@ -93,6 +94,8 @@
                         <th>Nome</th>
                         <th>E-mail</th>
                         <th>Telefone</th>
+                        <th>Endereço</th>
+                        <th>CPF</th>
                     </tr>";
 
             // Exibe os resultados
@@ -101,6 +104,8 @@
                         <td>" . $row['nome'] . "</td>
                         <td>" . $row['email'] . "</td>
                         <td>" . $row['celular'] . "</td>
+                        <td>" . $row['endereco'] . "</td>
+                        <td>" . $row['cpf'] . "</td>
                     </tr>";
             }
 

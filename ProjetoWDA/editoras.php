@@ -67,7 +67,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 					echo "<td>".$row["email"]."</td>";
 					echo "<td>".$row["telefone"]."</td>";
 					echo "<td>".$row["site"]."</td>";
-					echo "<td><a href='editaeditora.php?id=".$row["id"]."' class='btn btn-warning'>Editar</a> | <a href='excluir.php?id=".$row["id"]."' class='btn btn-danger'>Excluir</a></td>";
+					echo "<td><a href='editaeditora.php?id=".$row["id"]."' class='btn btn-warning'>Editar</a> | <a href='excluireditora.php?id=".$row["id"]."' class='btn btn-danger'>Excluir</a></td>";
 					echo "</tr>";
 				}
 			} else {

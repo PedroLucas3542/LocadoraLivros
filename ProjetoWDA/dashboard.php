@@ -114,20 +114,19 @@ mysqli_close($conn);
         }
 
         function drawUserChart(userData) {
-            var data = google.visualization.arrayToDataTable(userData);
+    var data = google.visualization.arrayToDataTable(userData);
 
-            var options = {
-                title: 'Quantidade de Empréstimos por Usuário',
-                hAxis: {title: 'Usuário', minValue: 0},
-                vAxis: {title: 'Quantidade de Empréstimos', minValue: 0},
-                chartArea: {width: '80%', height: '70%'},
-                legend: 'none'
-            };
+    var options = {
+        title: 'Quantidade de Empréstimos por Usuário',
+        hAxis: {title: 'Usuário', minValue: 0},
+        vAxis: {title: 'Quantidade de Empréstimos', minValue: 0, format: '0'},
+        chartArea: {width: '80%', height: '70%'},
+        legend: 'none'
+    };
 
-            var chart = new google.visualization.ColumnChart(document.getElementById('userChart'));
-            chart.draw(data, options);
-        }
-
+    var chart = new google.visualization.ColumnChart(document.getElementById('userChart'));
+    chart.draw(data, options);
+}
         function drawBookChart(bookData) {
             var data = google.visualization.arrayToDataTable(bookData);
 

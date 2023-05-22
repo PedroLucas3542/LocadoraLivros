@@ -44,14 +44,14 @@
             padding: 10px 20px;
             font-size: 14px;
             border-radius: 4px;
-            background-color: #4CAF50;
+            background-color: #4169E1;
             color: #ffffff;
             border: none;
             cursor: pointer;
         }
 
         .btn:hover {
-            background-color: #45a049;
+            background-color: #0F52BA;
         }
 
         .alert {

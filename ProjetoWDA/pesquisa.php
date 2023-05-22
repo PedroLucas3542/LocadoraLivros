@@ -44,7 +44,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
         input[type="submit"] {
             padding: 10px 15px;
-            background-color: #4CAF50;
+            background-color: #3498db;
             color: #fff;
             font-size: 14px;
             border: none;

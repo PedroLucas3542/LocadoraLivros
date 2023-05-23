@@ -6,6 +6,10 @@
     <meta charset="UTF-8">
     <title>Pesquisa de Usuários</title>
     <style>
+        html{
+            background-color: #f0f5f9;
+        }
+        
         .navbar {
             background-color: #fff;
             border-bottom: 1px solid #ccc;
@@ -130,9 +134,6 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="editoras.php">Editoras</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="atrasos.php">Atrasos</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="dashboard.php">Dashboard</a>

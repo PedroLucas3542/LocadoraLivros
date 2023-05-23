@@ -16,6 +16,10 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     <title>Usuários</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
 	<style>
+        html{
+            background-color: #f0f5f9;
+        }
+        
         .navbar {
             background-color: #fff;
             border-bottom: 1px solid #ccc;
@@ -156,9 +160,6 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                     <a class="nav-link" href="editoras.php">Editoras</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="atrasos.php">Atrasos</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="dashboard.php">Dashboard</a>
                 </li>
                 <li class="nav-item">
@@ -188,6 +189,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                 <th>Celular</th>
                 <th>Endereço</th>
                 <th>CPF</th>
+                <th>Ação</th>
             </tr>
             <?php
             include 'conexao.php';

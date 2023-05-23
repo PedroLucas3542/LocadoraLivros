@@ -1,45 +1,58 @@
 <?php
-include_once('conexao.php');
+session_start();
 
-$hoje = date('Y-m-d');
-
-// Recebe o ID do empréstimo a ser devolvido
-$emprestimo_id = $_GET['id'];
-
-// Consulta o empréstimo pelo ID
-$query_emprestimo = "SELECT * FROM emprestimos WHERE id = $emprestimo_id";
-$resultado_emprestimo = mysqli_query($conn, $query_emprestimo);
-
-if (mysqli_num_rows($resultado_emprestimo) > 0) {
-    $emprestimo = mysqli_fetch_assoc($resultado_emprestimo);
-    $prazo = $emprestimo['prazo_entrega'];
-
-    // Recupera o ID do livro do empréstimo
-    $livro_id = $emprestimo['livro_id'];
-
-    // Atualiza a tabela de livros para incrementar o estoque
-    $update_livro_query = "UPDATE livros SET estoque = estoque + 1 WHERE id = $livro_id";
-    mysqli_query($conn, $update_livro_query);
-
-    if ($prazo > $hoje) {
-        $prazo_status = "s";
-    } else {
-        $prazo_status = "n";
-    }
-
-    $insert_devolvido_query = "INSERT INTO devolvidos (livro_id, prazo) VALUES ('$emprestimo_id', '$prazo_status')";
-    mysqli_query($conn, $insert_devolvido_query);
-
-    // Apaga o registro do empréstimo
-    $delete_emprestimo_query = "DELETE FROM emprestimos WHERE id = $emprestimo_id";
-    mysqli_query($conn, $delete_emprestimo_query);
-
-    echo "Devolução realizada com sucesso!";
-} else {
-    echo "Empréstimo não encontrado.";
+// Verifica se o usuário está logado
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    // Se o usuário não estiver logado, redireciona para a página de login
+    header('Location: login.php');
+    exit();
 }
 
-// Redireciona para a página de empréstimos
-header('Location: emprestimos.php');
-exit();
+// Verifica se o ID do empréstimo foi passado via GET
+if (isset($_GET['id'])) {
+    $emprestimoId = $_GET['id'];
+
+    // Inclua o arquivo de conexão com o banco de dados
+    include 'conexao.php';
+
+    // Query SQL para selecionar o empréstimo com base no ID
+    $sql = "SELECT * FROM emprestimos WHERE id = $emprestimoId";
+    $result = mysqli_query($conn, $sql);
+
+    if (mysqli_num_rows($result) === 1) {
+        // O empréstimo foi encontrado, obtenha os dados do empréstimo
+        $emprestimo = mysqli_fetch_assoc($result);
+
+        // Verifique se o empréstimo já foi devolvido
+        if ($emprestimo['status'] === 'Devolvido') {
+            // O empréstimo já foi devolvido, redirecione de volta para a página de empréstimos
+            header('Location: emprestimos.php');
+            exit();
+        }
+
+        // Atualize o status do empréstimo para 'Devolvido' e registre a data de devolução atual
+        $dataDevolucao = date('Y-m-d');
+        $sqlUpdate = "UPDATE emprestimos SET status = 'Devolvido', data_devolucao = '$dataDevolucao' WHERE id = $emprestimoId";
+        $resultUpdate = mysqli_query($conn, $sqlUpdate);
+
+        if ($resultUpdate) {
+            // A atualização foi bem-sucedida, redirecione de volta para a página de empréstimos
+            header('Location: emprestimos.php');
+            exit();
+        } else {
+            // Ocorreu um erro ao atualizar o empréstimo, exiba uma mensagem de erro
+            echo "Erro ao registrar a devolução.";
+        }
+    } else {
+        // O empréstimo não foi encontrado, exiba uma mensagem de erro
+        echo "Erro ao registrar a devolução: " . mysqli_error($conn);
+    }
+
+    // Feche a conexão com o banco de dados
+    mysqli_close($conn);
+} else {
+    // O ID do empréstimo não foi passado via GET, redirecione de volta para a página de empréstimos
+    header('Location: emprestimos.php');
+    exit();
+}
 ?>

@@ -12,12 +12,15 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Lista de Livros</title>
+	<title>Livros</title>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="style.css">
 	<script src="js/bootstrap.bundle.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<style>
+        html{
+            background-color: #f0f5f9;
+        }
+        
 	.navbar {
             background-color: #fff;
             border-bottom: 1px solid #ccc;
@@ -156,9 +159,6 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                     <a class="nav-link" href="editoras.php">Editoras</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="atrasos.php">Atrasos</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="dashboard.php">Dashboard</a>
                 </li>
                 <li class="nav-item">
@@ -177,6 +177,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 	<center><h1>Lista de Livros</h1></center>
 
 	<center><a href="adicionarlivro.php"><button type="button" class="button-background-move">Adicionar Livro</button></a> <a href="pesquisarlivros.php"><button type="button" class="button-background-move">Pesquisar Livro</button></a></center>
+    <br>
 	<table class="table table-warning table-striped">
 		<tr>
 			<th>ID</th>

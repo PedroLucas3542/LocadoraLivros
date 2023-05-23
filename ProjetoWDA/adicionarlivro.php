@@ -40,14 +40,14 @@
             padding: 10px 20px;
             font-size: 14px;
             border-radius: 4px;
-            background-color: #4CAF50;
+            background-color: #3498db;
             color: #ffffff;
             border: none;
             cursor: pointer;
         }
 
         .btn:hover {
-            background-color: #45a049;
+            background-color: #3498db;
         }
 
         .alert {
@@ -100,7 +100,7 @@
     <br>
     <label for="estoque">Quantidade em Estoque:</label>
     <input type="text" name="estoque" id="estoque" class="form-control">
-    <div id="estoqueError" class="error-message"></div>
+    <div id="estoqueError" class="error-message"></div><br>
     <br>
     <input type="submit" name="btn" value="Cadastrar" class="btn btn-success">
 </form>
@@ -111,6 +111,7 @@
         var autor = document.getElementById('autor').value;
         var editora = document.getElementById('editora').value;
         var dataLancamento = document.getElementById('data_lancamento').value;
+        var estoque = document.getElementById('estoqueError').value;
 
         var isValid = true;
 
@@ -128,6 +129,10 @@
         }
         if (dataLancamento === '') {
             document.getElementById('dataLancamentoError').innerHTML = 'O campo Data de Lançamento é obrigatório.';
+            isValid = false;
+        }
+        if (estoque === '') {
+            document.getElementById('estoqueError').innerHTML = 'O campo Estoque é obrigatório.';
             isValid = false;
         }
 

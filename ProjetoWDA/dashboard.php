@@ -12,28 +12,44 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <script src="js/bootstrap.bundle.min.js"></script>
 
-<nav class="navbar navbar-expand-lg bg-light">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
-            <img src="logo.png" alt="Bootstrap" width="90" height="72">
+            <img src="logo.png" width="80" height="60">
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-link btn btn-light" href="usuarios.php">Usuários</a>
-                <a class="nav-link btn btn-light" href="livros.php">Livros</a>
-                <a class="nav-link btn btn-light" href="emprestimos.php">Empréstimos</a>
-                <a class="nav-link btn btn-light" href="editoras.php">Editoras</a>
-                <a class="nav-link btn btn-light" href="atrasos.php">Atrasos</a>
-                <a class="nav-link btn btn-light" href="dashboard.php" class="dashboard-button">Dashboard</a>
-                <a class="nav-link btn btn-light" href="logout.php">Sair</a>
-            </div>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="usuarios.php">Usuários</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="livros.php">Livros</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="emprestimos.php">Empréstimos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="editoras.php">Editoras</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="dashboard.php">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="logout.php">
+                        <i class="fa fa-sign-out"></i>
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
-</nav>
-<br><br>
+</nav><br>
 
 <?php
 // Inclui o arquivo de conexão com o banco de dados

@@ -40,7 +40,7 @@
     .login-container input[type="submit"] {
         width: 100%;
         padding: 10px;
-        background-color: #4CAF50;
+        background-color: #3498db;
         color: #fff;
         border: none;
         border-radius: 3px;
@@ -48,7 +48,7 @@
     }
     
     .login-container input[type="submit"]:hover {
-        background-color: #45a049;
+        background-color: #2980b9;
     }
     
     .error-message {

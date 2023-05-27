@@ -205,7 +205,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                 include 'conexao.php';
 
                 // Query SQL para selecionar os empréstimos
-                $sql = "SELECT * FROM emprestimos WHERE status = ''";
+                $sql = "SELECT * FROM emprestimos WHERE status = '' ORDER BY usuario_nome ASC";
 
                 $result = mysqli_query($conn, $sql);
 
@@ -265,7 +265,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                 include 'conexao.php';
 
                 // Query SQL para selecionar os empréstimos devolvidos
-                $devolvidosSql = "SELECT * FROM emprestimos WHERE status = 'Devolvido'";
+                $devolvidosSql = "SELECT * FROM emprestimos WHERE status = 'Devolvido' ORDER BY usuario_nome ASC";
 
                 $devolvidosResult = mysqli_query($conn, $devolvidosSql);
 

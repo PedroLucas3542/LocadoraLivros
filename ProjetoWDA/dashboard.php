@@ -159,7 +159,7 @@ mysqli_close($conn);
     </script>
     <style>
         .card {
-            width: 550px;
+            width: 500px;
             height: 500px;
             padding: 20px;
             box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);

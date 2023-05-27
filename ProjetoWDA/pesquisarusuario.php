@@ -165,7 +165,7 @@
         include 'conexao.php';
 
         // Constrói a consulta SQL
-        $query = "SELECT * FROM usuarios WHERE nome LIKE '%$nome%'";
+        $query = "SELECT * FROM usuarios WHERE nome LIKE '%$nome% '";
 
         // Executa a consulta
         $result = mysqli_query($conn, $query);

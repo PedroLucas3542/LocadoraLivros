@@ -192,7 +192,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 			include 'conexao.php';
             
 			// Query para selecionar todos os livros
-			$sql = "SELECT * FROM livros";
+			$sql = "SELECT * FROM livros ORDER BY nome ASC";
 
 			// Executa a query e armazena o resultado
 			$result = $conn->query($sql);

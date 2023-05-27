@@ -36,16 +36,30 @@ if (isset($_GET['id'])) {
         $resultUpdate = mysqli_query($conn, $sqlUpdate);
 
         if ($resultUpdate) {
-            // A atualização foi bem-sucedida, redirecione de volta para a página de empréstimos
-            header('Location: emprestimos.php');
-            exit();
+            // A atualização do empréstimo foi bem-sucedida
+
+            // Obtenha o livro relacionado ao empréstimo
+            $livroId = $emprestimo['livro_id'];
+
+            // Incrementar o estoque do livro
+            $adicionar = "UPDATE livros SET estoque = estoque + 1 WHERE id = $livroId";
+            $resultIncremento = mysqli_query($conn, $adicionar);
+
+            if ($resultIncremento) {
+                // O estoque foi incrementado com sucesso
+                header('Location: emprestimos.php');
+                exit();
+            } else {
+                // Ocorreu um erro ao incrementar o estoque do livro
+                echo "Erro ao incrementar o estoque do livro: " . mysqli_error($conn);
+            }
         } else {
-            // Ocorreu um erro ao atualizar o empréstimo, exiba uma mensagem de erro
-            echo "Erro ao registrar a devolução.";
+            // Ocorreu um erro ao atualizar o empréstimo
+            echo "Erro ao registrar a devolução: " . mysqli_error($conn);
         }
     } else {
         // O empréstimo não foi encontrado, exiba uma mensagem de erro
-        echo "Erro ao registrar a devolução: " . mysqli_error($conn);
+        echo "Erro ao registrar a devolução: Empréstimo não encontrado.";
     }
 
     // Feche a conexão com o banco de dados

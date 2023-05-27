@@ -188,7 +188,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 		<?php
 			include 'conexao.php'; 
 			// Consultar usuários
-			$sql = "SELECT * FROM editoras";
+			$sql = "SELECT * FROM editoras ORDER BY nome ASC";
 			$result = mysqli_query($conn, $sql);
 			// Exibir resultados
 			//Se tiver mais de um registro

@@ -16,10 +16,11 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     <title>Usuários</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
 	<style>
+
         html{
-            background-color: #f0f5f9;
+        background-color: #f0f5f9;
         }
-        
+
         .navbar {
             background-color: #fff;
             border-bottom: 1px solid #ccc;
@@ -32,6 +33,8 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
         .navbar-toggler {
             border: none;
+            font-size: 1.5rem;
+            padding: 0.25rem 0.5rem;
         }
 
         .navbar-nav .nav-link {
@@ -94,41 +97,33 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         td a {
             color: #fff;
             margin-right: 5px;
+            padding: 5px;
         }
 
         td a.btn-warning {
             background-color: #f39c12;
+            font-size: 1.5rem;
         }
 
         td a.btn-danger {
             background-color: #e74c3c;
+            font-size: 1.5rem;
         }
 
-        @media (max-width: 768px) {
-            .navbar-brand img {
-                width: 80px;
-                height: 60px;
+        @media (max-width: 767px) {
+            .container {
+                width: 90%;
+                max-width: 100%;
+                padding: 10px;
             }
 
-            .button-background-move {
-                font-size: 14px;
+            .table {
+                width: 100%;
+                overflow-x: auto;
             }
 
-			.container {
-				width: 110px;
-                height: 90px;
-			}
-        }
-
-        @media (max-width: 576px) {
-            .navbar-brand img {
-                width: 60px;
-                height: 40px;
-            }
-
-            .button-background-move {
-                font-size: 12px;
-                padding: 8px 16px;
+            .table td {
+                padding: 5px;
             }
         }
     </style>
@@ -136,7 +131,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light">
+<nav class="navbar navbar-expand-lg bg-light navbar-custom">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
             <img src="logo.png" width="80" height="60">
@@ -194,7 +189,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
             <?php
             include 'conexao.php';
             // Consultar usuários
-            $sql = "SELECT * FROM usuarios";
+            $sql = "SELECT * FROM usuarios ORDER BY nome ASC";
             $result = mysqli_query($conn, $sql);
             // Exibir resultados
             //Se tiver mais de um registro

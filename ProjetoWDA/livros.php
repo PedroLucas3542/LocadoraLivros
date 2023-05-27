@@ -204,7 +204,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 				echo "<td>".$row["nome"]."</td>";
 				echo "<td>".$row["autor"]."</td>";
 				echo "<td>".$row["editora"]."</td>";
-				echo "<td>".$row["data_lancamento"]."</td>";
+				echo "<td>".formatarData($row["data_lancamento"])."</td>";
 				echo "<td>".$row["estoque"]."</td>";
 				echo "<td><a href='editarlivros.php?id=".$row["id"]."' class='btn'><i class='fa fa-edit' style='font-size:48px;color:orange'></i></a><a href='excluirlivro.php?id=".$row["id"]."' class='btn'><i class='fa fa-trash-o' style='font-size:48px;color:red'></i></a></td>";
 				echo "</tr>";
@@ -212,9 +212,16 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
 			// Fecha a conexão com o banco de dados
 			$conn->close();
+
+            // Função para formatar a data no formato brasileiro
+            function formatarData($data) {
+            return date("d/m/Y", strtotime($data));
+            }
 		?>
 	</table>
 	</div>
 	</div>
+
+    
 </body>
 </html>

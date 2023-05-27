@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
     <title>Formulário</title>
     <style>
         body {
@@ -44,14 +46,14 @@
             padding: 10px 20px;
             font-size: 14px;
             border-radius: 4px;
-            background-color: #4CAF50;
+            background-color: #4169E1;
             color: #ffffff;
             border: none;
             cursor: pointer;
         }
 
         .btn:hover {
-            background-color: #45a049;
+            background-color: #0F52BA;
         }
 
         .alert {
@@ -81,7 +83,7 @@
             <span class="error-message"></span><br><br>
             
             <label for="telefone">Telefone:</label>
-            <input type="text" name="telefone" class="form-control">
+            <input type="text" id= "telefone" name="telefone" class="form-control">
             <span class="error-message"></span><br><br>
             
             <label for="site">Site:</label>
@@ -89,6 +91,11 @@
             <span class="error-message"></span><br><br>
             
             <input type="submit" name="btn" value="Cadastrar" class="btn">
+            <script>
+            $(document).ready(function() {
+                    $('#telefone').mask('(00) 00000-0000');
+                });
+            </script>
         </form>
         
         <script>

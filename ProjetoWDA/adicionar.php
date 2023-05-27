@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
     <title>Formulário</title>
     <style>
         body {
@@ -81,7 +83,7 @@
             <span class="error-message"></span><br><br>
             
             <label for="celular">Celular:</label>
-            <input type="text" name="celular" class="form-control" onkeypress="formatar('(##) #####-#####',this)" >
+            <input type="text" id="celular" name="celular" class="form-control" >
             <span class="error-message"></span><br><br>
             
             <label for="endereco">Endereço:</label>
@@ -89,10 +91,20 @@
             <span class="error-message"></span><br><br>
             
             <label for="cpf">CPF:</label>
-            <input type="text" name="cpf" class="form-control">
+            <input type="text" id="cpf" name="cpf" class="form-control">
             <span class="error-message"></span><br><br>
             
             <input type="submit" name="btn" value="Cadastrar" class="btn">
+            <script>
+            $(document).ready(function() {
+                    $('#cpf').mask('000.000.000-00');
+                });
+            </script>
+            <script>
+            $(document).ready(function() {
+                    $('#celular').mask('(00) 00000-0000');
+                });
+            </script>
         </form>
         
         <script>

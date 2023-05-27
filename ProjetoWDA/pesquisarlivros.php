@@ -237,7 +237,7 @@
                         <td>" . $row['nome'] . "</td>
                         <td>" . $row['autor'] . "</td>
                         <td>" . $row['editora'] . "</td>
-                        <td>" . $row['data_lancamento'] . "</td>
+                        <td>" .formatarData($row["data_lancamento"]). "</td>
                     </tr>";
             }
 
@@ -249,6 +249,12 @@
         // Fechar a conexão com o banco de dados
         mysqli_close($conn);
     }
+
+    // Função para formatar a data no formato brasileiro
+    function formatarData($data) {
+        return date("d/m/Y", strtotime($data));
+        }
+        
     ?>
     </div>
     </div>

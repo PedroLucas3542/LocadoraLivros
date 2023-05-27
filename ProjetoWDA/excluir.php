@@ -5,7 +5,7 @@ include 'conexao.php';
 $id = $_GET['id'];
 
 // Verifica se o usuário possui empréstimo
-$query_verifica_emprestimo = "SELECT COUNT(*) as total FROM emprestimos WHERE usuario_id = $id";
+$query_verifica_emprestimo = "SELECT COUNT(*) as total FROM emprestimos WHERE usuario_id = $id WHERE status = ''";
 $resultado = mysqli_query($conn, $query_verifica_emprestimo);
 $row = mysqli_fetch_assoc($resultado);
 $total_emprestimos = $row['total'];

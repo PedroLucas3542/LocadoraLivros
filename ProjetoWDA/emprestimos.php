@@ -219,7 +219,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                         echo "<td>" . $row["livro_nome"] . "</td>";
                         echo "<td>" . $row["usuario_id"] . "</td>";
                         echo "<td>" . $row["usuario_nome"] . "</td>";
-                        echo "<td>" . $row["prazo_entrega"] . "</td>";
+                        echo "<td>" .formatarData($row["prazo_entrega"]). "</td>";
                         
                         // Verifica o status do empréstimo
                         $dataAtual = date('Y-m-d');
@@ -279,7 +279,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                         echo "<td>" . $devolvidoRow["livro_nome"] . "</td>";
                         echo "<td>" . $devolvidoRow["usuario_id"] . "</td>";
                         echo "<td>" . $devolvidoRow["usuario_nome"] . "</td>";
-                        echo "<td>" . $devolvidoRow["prazo_entrega"] . "</td>";
+                        echo "<td>" .formatarData($devolvidoRow["prazo_entrega"]). "</td>";
                         
                         // Verifica se o empréstimo foi devolvido dentro ou fora do prazo
                         $prazoEntrega = $devolvidoRow["prazo_entrega"];
@@ -295,6 +295,12 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
                 // Fecha a conexão com o banco de dados
                 mysqli_close($conn);
+
+                
+// Função para formatar a data no formato brasileiro
+            function formatarData($data) {
+                return date("d/m/Y", strtotime($data));
+                }
             ?>
         </tbody>
     </table>

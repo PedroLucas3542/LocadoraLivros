@@ -88,7 +88,7 @@
             </select>
             <br><br>
             <label for="prazo">Prazo:</label>
-            <input type="date" id="prazo" name="prazo" min="<?php echo date('Y-m-d'); ?>" max="<?php echo date('Y-m-d', strtotime('+30 days')); ?>">
+            <input type="date" id="prazo" name="prazo" min="<?php echo date('d/m/Y'); ?>" max="<?php echo date('Y-m-d', strtotime('+30 days')); ?>">
             <br><br>
             <input type="submit" value="Realizar Empréstimo">
         </form>

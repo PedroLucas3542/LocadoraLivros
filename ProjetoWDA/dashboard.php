@@ -149,7 +149,7 @@ mysqli_close($conn);
             var options = {
                 title: 'Livros Mais Emprestados',
                 is3D: true,
-                chartArea: {width: '80%', height: '70%'},
+                chartArea: {width: '80%', height: '50%'},
                 legend: 'none'
             };
 
@@ -159,24 +159,25 @@ mysqli_close($conn);
     </script>
     <style>
         .card {
-            width: 500px;
-            height: 500px;
-            padding: 20px;
-            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
+    width: 90%;
+    height: 550px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    border-radius: 8px;
+    margin-bottom: 20px;
+            }
+
+            .card-container {
+                padding-left: 150px;
+                display: flex;
+                flex-wrap: wrap;
+            }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
+    <div class="card-container">
                 <div class="card">
                     <div id="userChart" style="width: 100%; height: 100%;"></div>
                 </div>
-            </div>
-            <div class="col-md-6">
                 <div class="card">
                     <div id="bookChart" style="width: 100%; height: 100%;"></div>
                 </div>

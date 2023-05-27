@@ -5,7 +5,7 @@ function deleteLivro($livroId) {
     include 'conexao.php';
 
     // Verifica se o livro possui empréstimos
-    $query_emprestimos = "SELECT COUNT(*) AS total_emprestimos FROM emprestimos WHERE livro_id = $livroId";
+    $query_emprestimos = "SELECT COUNT(*) AS total_emprestimos FROM emprestimos WHERE livro_id = $livroId WHERE status = ''";
     $result_emprestimos = mysqli_query($conn, $query_emprestimos);
     $row_emprestimos = mysqli_fetch_assoc($result_emprestimos);
     $total_emprestimos = $row_emprestimos['total_emprestimos'];

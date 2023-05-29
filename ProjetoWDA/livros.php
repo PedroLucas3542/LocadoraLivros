@@ -1,27 +1,16 @@
-<?php
-session_start();
-
-// Verifica se o usuário está logado
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    // Se o usuário não estiver logado, redireciona para a página de login
-    header('Location: login.php');
-    exit();
-}
-?>
-
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Livros</title>
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<script src="js/bootstrap.bundle.min.js"></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<style>
+    <title>Livros</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
         html{
             background-color: #f0f5f9;
         }
         
-	.navbar {
+        .navbar {
             background-color: #fff;
             border-bottom: 1px solid #ccc;
         }
@@ -115,10 +104,10 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                 font-size: 14px;
             }
 
-			.container {
-				width: 110px;
+            .container {
+                width: 110px;
                 height: 90px;
-			}
+            }
         }
 
         @media (max-width: 576px) {
@@ -171,57 +160,69 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     </div>
 </nav>
 
-	<div class="fundo">
-	<br><br>
-		<div class="container">
-	<center><h1>Lista de Livros</h1></center>
+    <div class="fundo">
+        <br><br>
+        <div class="container">
+    <center><h1>Lista de Livros</h1></center>
 
-	<center><a href="adicionarlivro.php"><button type="button" class="button-background-move">Adicionar Livro</button></a> <a href="pesquisarlivros.php"><button type="button" class="button-background-move">Pesquisar Livro</button></a></center>
+    <center><a href="adicionarlivro.php"><button type="button" class="button-background-move">Adicionar Livro</button></a> <a href="pesquisarlivros.php"><button type="button" class="button-background-move">Pesquisar Livro</button></a></center>
     <br>
-	<table class="table table-warning table-striped">
-		<tr>
-			<th>ID</th>
-			<th>Nome</th>
-			<th>Autor</th>
-			<th>Editora</th>
-			<th>Data de Lançamento</th>
-			<th>Quantidade em Estoque</th>
-			<th>Ação</th>
-		</tr>
-		<?php 
-			include 'conexao.php';
+    <table class="table table-warning table-striped">
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Autor</th>
+            <th>Editora</th>
+            <th>Data de Lançamento</th>
+            <th>Quantidade em Estoque</th>
+            <th>Status</th>
+            <th>Ação</th>
+        </tr>
+        <?php 
+            include 'conexao.php';
             
-			// Query para selecionar todos os livros
-			$sql = "SELECT * FROM livros ORDER BY nome ASC";
+            // Query para selecionar todos os livros
+            $sql = "SELECT livros.id, livros.nome, livros.autor, livros.editora, livros.data_lancamento, livros.estoque, COUNT(emprestimos.id) AS quantidade_emprestimos 
+            FROM livros 
+            LEFT JOIN emprestimos ON livros.id = emprestimos.livro_id AND emprestimos.status = '' 
+            GROUP BY livros.id 
+            ORDER BY livros.nome ASC";
 
-			// Executa a query e armazena o resultado
-			$result = $conn->query($sql);
+            // Executa a query e armazena o resultado
+            $result = $conn->query($sql);
 
-			// Loop para exibir cada registro na tabela
-			while($row = $result->fetch_assoc()) {
-				echo "<tr>";
-				echo "<td>".$row["id"]."</td>";
-				echo "<td>".$row["nome"]."</td>";
-				echo "<td>".$row["autor"]."</td>";
-				echo "<td>".$row["editora"]."</td>";
-				echo "<td>".formatarData($row["data_lancamento"])."</td>";
-				echo "<td>".$row["estoque"]."</td>";
-				echo "<td><a href='editarlivros.php?id=".$row["id"]."' class='btn'><i class='fa fa-edit' style='font-size:48px;color:orange'></i></a><a href='excluirlivro.php?id=".$row["id"]."' class='btn'><i class='fa fa-trash-o' style='font-size:48px;color:red'></i></a></td>";
-				echo "</tr>";
-			}
+            // Loop para exibir cada registro na tabela
+            while($row = $result->fetch_assoc()) {
+                echo "<tr>";
+                echo "<td>".$row["id"]."</td>";
+                echo "<td>".$row["nome"]."</td>";
+                echo "<td>".$row["autor"]."</td>";
+                echo "<td>".$row["editora"]."</td>";
+                echo "<td>".formatarData($row["data_lancamento"])."</td>";
+                echo "<td>".$row["estoque"]."</td>";
+                echo "<td>";
+                if ($row["quantidade_emprestimos"] > 0) {
+                    echo "Em empréstimo (".$row["quantidade_emprestimos"]." empréstimos)";
+                } else {
+                    echo "Disponível";
+                }
+                echo "</td>";
+                echo "<td><a href='editarlivros.php?id=".$row["id"]."' class='btn'><i class='fa fa-edit' style='font-size:48px;color:orange'></i></a><a href='excluirlivro.php?id=".$row["id"]."' class='btn'><i class='fa fa-trash-o' style='font-size:48px;color:red'></i></a></td>";
+                echo "</tr>";
+            }
 
-			// Fecha a conexão com o banco de dados
-			$conn->close();
+            // Fecha a conexão com o banco de dados
+            $conn->close();
 
             // Função para formatar a data no formato brasileiro
             function formatarData($data) {
-            return date("d/m/Y", strtotime($data));
+                return date("d/m/Y", strtotime($data));
             }
-		?>
-	</table>
-	</div>
-	</div>
+        ?>
+    </table>
+    </div>
+    </div>
 
-    
+
 </body>
 </html>

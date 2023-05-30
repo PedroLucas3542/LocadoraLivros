@@ -1,3 +1,48 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    text-align: center;
+    padding-top: 50px;
+  }
+
+  .material-icons {
+    font-size: 48px;
+    color: red;
+    margin-bottom: 20px;
+  }
+
+  a {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 15px;
+    color: #333;
+    text-decoration: none;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .error-message {
+    font-size: 24px;
+    color: #555;
+    margin-bottom: 20px;
+  }
+
+  .btn {
+            padding: 10px 20px;
+            font-size: 14px;
+            border-radius: 4px;
+            background-color: #4169E1;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #0F52BA;
+        }
+</style>
+
 <?php
 // Verifica se o formulário foi enviado
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -40,8 +85,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo 'Erro ao realizar o empréstimo: ' . mysqli_error($conn);
         }
     } else {
-        echo 'Não há estoque disponível para o livro selecionado.<br>';
-        echo '<a href="emprestar.php">Emprestar outro livro</a>';
+        echo '<br><br><br><br><div>';
+        echo '<i class="material-icons">block</i>';
+        echo '<p class="error-message">Oops... parece que este livro não está disponível!</p>';
+        echo '<a href="emprestar.php"><button class="btn">Emprestar outro livro<button></a>';
+        echo '<a href="emprestimos.php">Cancelar</a>';
+        echo '</div>';
     }
 
     // Fechar a conexão com o banco de dados

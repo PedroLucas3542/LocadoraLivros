@@ -1,24 +1,13 @@
-<?php
-session_start();
-
-// Verifica se o usuário está logado
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    // Se o usuário não estiver logado, redireciona para a página de login
-    header('Location: login.php');
-    exit();
-}
-?>
-
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>Usuários</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-	<style>
-
-        html{
-        background-color: #f0f5f9;
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        html {
+            background-color: #f0f5f9;
         }
 
         .navbar {
@@ -85,6 +74,36 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
             background-color: #2980b9;
         }
 
+        .search-bar {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+
+        .search-bar form {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar input[type="text"],
+        .search-bar select {
+            margin-right: 10px;
+            padding: 5px;
+        }
+
+        .search-bar button[type="submit"] {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .search-bar button[type="submit"]:hover {
+            background-color: #2980b9;
+        }
+
         .table {
             margin-top: 20px;
         }
@@ -128,7 +147,6 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         }
     </style>
     <script src="js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-light navbar-custom">
@@ -167,15 +185,32 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     </div>
 </nav>
 
-	<div class="fundo">
+<div class="fundo">
     <br><br>
     <div class="container">
-        <center><h1>Lista de Usuários</h1></center>
-		<center>
-        <a href="adicionar.php"><button type="button" class="button-background-move">Adicionar Usuário</button></a> 
-        <a href="pesquisarusuario.php"><button type="button" class="button-background-move">Pesquisar Usuário</button></a><br>
-		</center>
-        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <h1>Lista de Usuários</h1>
+            </div>
+            <div class="col-md-6 text-end">
+                <a href="adicionar.php"><button class="button-background-move">Adicionar Usuário</button></a>
+            </div>
+        </div>
+
+        <div class="search-bar">
+            <form method="GET">
+                <input type="text" name="search" placeholder="Pesquisar...">
+                <select name="filter">
+                    <option value="id">ID</option>
+                    <option value="nome">Nome</option>
+                    <option value="email">Email</option>
+                    <option value="celular">Celular</option>
+                    <option value="cpf">CPF</option>
+                </select>
+                <button type="submit">Pesquisar</button>
+            </form>
+        </div>
+
         <table class="table table-primary table-striped">
             <tr>
                 <th>ID</th>
@@ -188,11 +223,19 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
             </tr>
             <?php
             include 'conexao.php';
-            // Consultar usuários
-            $sql = "SELECT * FROM usuarios ORDER BY nome ASC";
+
+            if (isset($_GET['search']) && isset($_GET['filter'])) {
+                // Realizar pesquisa com base nos critérios fornecidos
+                $search = $_GET['search'];
+                $filter = $_GET['filter'];
+                $sql = "SELECT * FROM usuarios WHERE $filter LIKE '%$search%' ORDER BY nome ASC";
+            } else {
+                // Consultar usuários sem critérios de pesquisa
+                $sql = "SELECT * FROM usuarios ORDER BY nome ASC";
+            }
+
             $result = mysqli_query($conn, $sql);
-            // Exibir resultados
-            //Se tiver mais de um registro
+
             if (mysqli_num_rows($result) > 0) {
                 while ($row = mysqli_fetch_assoc($result)) {
                     echo "<tr>";
@@ -207,11 +250,10 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                     echo "</tr>";
                 }
             } else {
-                echo "<tr><td colspan='4'>Nenhum usuário encontrado.</td></tr>";
+                echo "<tr><td colspan='7'>Nenhum usuário encontrado.</td></tr>";
             }
-            // Fechar conexão
-            mysqli_close($conn);
 
+            mysqli_close($conn);
             ?>
         </table>
     </div>

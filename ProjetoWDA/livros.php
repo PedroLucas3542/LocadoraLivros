@@ -94,6 +94,36 @@
             background-color: #e74c3c;
         }
 
+        .search-bar {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+
+        .search-bar form {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar input[type="text"],
+        .search-bar select {
+            margin-right: 10px;
+            padding: 5px;
+        }
+
+        .search-bar button[type="submit"] {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .search-bar button[type="submit"]:hover {
+            background-color: #2980b9;
+        }
+
         @media (max-width: 768px) {
             .navbar-brand img {
                 width: 80px;
@@ -160,69 +190,132 @@
     </div>
 </nav>
 
-    <div class="fundo">
-        <br><br>
-        <div class="container">
-    <center><h1>Lista de Livros</h1></center>
+<div class="fundo">
+    <br><br>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1>Lista de Livros</h1>
+            </div>
+            <div class="col-md-6 text-end">
+                <a href="adicionarlivro.php"><button class="button-background-move">Adicionar Livro</button></a>
+            </div>
+        </div>
 
-    <center><a href="adicionarlivro.php"><button type="button" class="button-background-move">Adicionar Livro</button></a> <a href="pesquisarlivros.php"><button type="button" class="button-background-move">Pesquisar Livro</button></a></center>
-    <br>
-    <table class="table table-warning table-striped">
-        <tr>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Autor</th>
-            <th>Editora</th>
-            <th>Data de Lançamento</th>
-            <th>Quantidade em Estoque</th>
-            <th>Status</th>
-            <th>Ação</th>
-        </tr>
-        <?php 
-            include 'conexao.php';
-            
-            // Query para selecionar todos os livros
+        <div class="search-bar">
+            <form method="GET">
+                <input type="text" name="search" placeholder="Pesquisar...">
+                <select name="filter">
+                    <option value="id">ID</option>
+                    <option value="nome">Nome do Livro</option>
+                    <option value="autor">Autor</option>
+                    <option value="editora">Editora</option>
+                    <option value="status">Status</option>
+                </select>
+                <button type="submit">Pesquisar</button>
+            </form>
+        </div>
+
+        <br>
+
+        <table class="table table-warning table-striped">
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Autor</th>
+                <th>Editora</th>
+                <th>Data de Lançamento</th>
+                <th>Quantidade em Estoque</th>
+                <th>Status</th>
+                <th>Ação</th>
+            </tr>
+
+            <?php 
+include 'conexao.php';
+
+if (isset($_GET['search']) && isset($_GET['filter'])) {
+    // Realizar pesquisa com base nos critérios fornecidos
+    $search = $_GET['search'];
+    $filter = $_GET['filter'];
+
+    // Verificar se a pesquisa está vazia
+    if (!empty($search)) {
+        if ($filter === 'id') {
+            // Pesquisa por ID
             $sql = "SELECT livros.id, livros.nome, livros.autor, livros.editora, livros.data_lancamento, livros.estoque, COUNT(emprestimos.id) AS quantidade_emprestimos 
             FROM livros 
             LEFT JOIN emprestimos ON livros.id = emprestimos.livro_id AND emprestimos.status = '' 
+            WHERE livros.id = '$search'
             GROUP BY livros.id 
             ORDER BY livros.nome ASC";
+        } else {
+            // Pesquisa por outros critérios
+            $sql = "SELECT livros.id, livros.nome, livros.autor, livros.editora, livros.data_lancamento, livros.estoque, COUNT(emprestimos.id) AS quantidade_emprestimos 
+            FROM livros 
+            LEFT JOIN emprestimos ON livros.id = emprestimos.livro_id AND emprestimos.status = '' 
+            WHERE $filter LIKE '%$search%'
+            GROUP BY livros.id 
+            ORDER BY livros.nome ASC";
+        }
+    } else {
+        // Consultar todos os livros
+        $sql = "SELECT livros.id, livros.nome, livros.autor, livros.editora, livros.data_lancamento, livros.estoque, COUNT(emprestimos.id) AS quantidade_emprestimos 
+        FROM livros 
+        LEFT JOIN emprestimos ON livros.id = emprestimos.livro_id AND emprestimos.status = '' 
+        GROUP BY livros.id 
+        ORDER BY livros.nome ASC";
+    }
+} else {
+    // Consultar todos os livros
+    $sql = "SELECT livros.id, livros.nome, livros.autor, livros.editora, livros.data_lancamento, livros.estoque, COUNT(emprestimos.id) AS quantidade_emprestimos 
+    FROM livros 
+    LEFT JOIN emprestimos ON livros.id = emprestimos.livro_id AND emprestimos.status = '' 
+    GROUP BY livros.id 
+    ORDER BY livros.nome ASC";
+}
 
-            // Executa a query e armazena o resultado
-            $result = $conn->query($sql);
+// Executa a query e armazena o resultado
+$result = $conn->query($sql);
 
-            // Loop para exibir cada registro na tabela
-            while($row = $result->fetch_assoc()) {
-                echo "<tr>";
-                echo "<td>".$row["id"]."</td>";
-                echo "<td>".$row["nome"]."</td>";
-                echo "<td>".$row["autor"]."</td>";
-                echo "<td>".$row["editora"]."</td>";
-                echo "<td>".formatarData($row["data_lancamento"])."</td>";
-                echo "<td>".$row["estoque"]."</td>";
-                echo "<td>";
-                if ($row["quantidade_emprestimos"] > 0) {
-                    echo "Em empréstimo (".$row["quantidade_emprestimos"]." empréstimos)";
-                } else {
-                    echo "Disponível";
-                }
-                echo "</td>";
-                echo "<td><a href='editarlivros.php?id=".$row["id"]."' class='btn'><i class='fa fa-edit' style='font-size:48px;color:orange'></i></a><a href='excluirlivro.php?id=".$row["id"]."' class='btn'><i class='fa fa-trash-o' style='font-size:48px;color:red'></i></a></td>";
-                echo "</tr>";
-            }
+if ($result && $result->num_rows > 0) {
+    // Loop para exibir cada registro na tabela
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr>";
+        echo "<td>" . $row["id"] . "</td>";
+        echo "<td>" . $row["nome"] . "</td>";
+        echo "<td>" . $row["autor"] . "</td>";
+        echo "<td>" . $row["editora"] . "</td>";
+        echo "<td>" . formatarData($row["data_lancamento"]) . "</td>";
+        echo "<td>" . $row["estoque"] . "</td>";
+        echo "<td>";
+        if ($row["quantidade_emprestimos"] > 0) {
+            echo "Em empréstimo (" . $row["quantidade_emprestimos"] . " empréstimos)";
+        } else {
+            echo "Disponível";
+        }
+        echo "</td>";
+        echo "<td><a href='editarlivros.php?id=" . $row["id"] . "' class='btn'><i class='fa fa-edit' style='font-size:48px;color:orange'></i></a><a href='excluirlivro.php?id=" . $row["id"] . "' class='btn'><i class='fa fa-trash-o' style='font-size:48px;color:red'></i></a></td>";
+        echo "</tr>";
+    }
+} else {
+    echo "<tr><td colspan='8'>Nenhum livro encontrado.</td></tr>";
+}
 
-            // Fecha a conexão com o banco de dados
-            $conn->close();
+// Fecha a conexão com o banco de dados
+$conn->close();
 
-            // Função para formatar a data no formato brasileiro
-            function formatarData($data) {
-                return date("d/m/Y", strtotime($data));
-            }
-        ?>
-    </table>
+// Função para formatar a data no formato brasileiro
+function formatarData($data)
+{
+    return date("d/m/Y", strtotime($data));
+}
+?>
+
+
+
+        </table>
     </div>
-    </div>
-
+</div>
 
 </body>
 </html>

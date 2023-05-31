@@ -105,6 +105,36 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
             background-color: #e74c3c;
         }
 
+        .search-bar {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+
+        .search-bar form {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar input[type="text"],
+        .search-bar select {
+            margin-right: 10px;
+            padding: 5px;
+        }
+
+        .search-bar button[type="submit"] {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .search-bar button[type="submit"]:hover {
+            background-color: #2980b9;
+        }
+
         @media (max-width: 768px) {
             .navbar-brand img {
                 width: 80px;
@@ -173,10 +203,31 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 </nav>
 	  
 	  <div class="fundo">
-	  <div class="container">
-      <center><h1>Lista de Editoras</h1></center>
-	  
-	  <center><a href="adicionareditora.php"><button type="button" class="button-background-move">Adicionar Editora</button></a> <a href="pesquisaeditoras.php"><button type="button" class="button-background-move">Pesquisar Editoras</button></a></center><br>
+	  <br><br>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1>Lista de Usuários</h1>
+            </div>
+            <div class="col-md-6 text-end">
+                <a href="adicionar.php"><button class="button-background-move">Adicionar Usuário</button></a>
+            </div>
+        </div>
+
+        <div class="search-bar">
+            <form method="GET">
+                <input type="text" name="search" placeholder="Pesquisar...">
+                <select name="filter">
+                    <option value="id">ID</option>
+                    <option value="nome">Nome</option>
+                    <option value="email">Email</option>
+                    <option value="telefone">Telefone</option>
+                    <option value="site">Site</option>
+                </select>
+                <button type="submit">Pesquisar</button>
+            </form>
+        </div>
+
 	<table class="table table-secondary table-striped">
 		<tr>
 			<th>ID</th>
@@ -184,12 +235,23 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 			<th>Email</th>
 			<th>Telefone</th>
 			<th>Site</th>
+            <th>Ação</th>
 		</tr>
 		<?php
 			include 'conexao.php'; 
-			// Consultar usuários
-			$sql = "SELECT * FROM editoras ORDER BY nome ASC";
-			$result = mysqli_query($conn, $sql);
+			if (isset($_GET['search']) && isset($_GET['filter'])) {
+                // Realizar pesquisa com base nos critérios fornecidos
+                $search = $_GET['search'];
+                $filter = $_GET['filter'];
+                $sql = "SELECT * FROM editoras WHERE $filter LIKE '%$search%' ORDER BY nome ASC";
+            } else {
+                // Consultar usuários sem critérios de pesquisa
+                $sql = "SELECT * FROM editoras ORDER BY nome ASC";
+            }
+
+            $result = mysqli_query($conn, $sql);
+
+
 			// Exibir resultados
 			//Se tiver mais de um registro
 			if (mysqli_num_rows($result) > 0) {

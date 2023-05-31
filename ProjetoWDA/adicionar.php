@@ -3,6 +3,7 @@
 <head>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Formulário</title>
     <style>
         body {
@@ -68,11 +69,19 @@
             color: #ff0000;
             font-size: 12px;
         }
+
+        .fa{
+            float: right;
+            color: #007bff;
+        }
     </style>
 </head>
 <body><br><br><br><br>
     <div class="container">
-		<center><h2>Cadastro de Usuário</h2></center>
+    <a href="usuarios.php">
+    <i class="fa fa-close" style="font-size:30px"></i>
+    </a>
+		<h2>Cadastro de Usuário</h2>
         <form action="add.php" method="post" accept-charset="utf-8" class="form-group" onsubmit="return validateForm()">
             <label for="nome">Nome:</label>
             <input type="text" name="nome" class="form-control" >

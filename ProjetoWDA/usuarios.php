@@ -131,18 +131,41 @@
 
         @media (max-width: 767px) {
             .container {
-                width: 90%;
-                max-width: 100%;
                 padding: 10px;
             }
 
             .table {
-                width: 100%;
                 overflow-x: auto;
             }
 
             .table td {
                 padding: 5px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 5px;
+            }
+
+            .button-background-move {
+                padding: 5px 10px;
+                font-size: 12px;
+            }
+
+            .search-bar input[type="text"],
+            .search-bar select {
+                margin-right: 5px;
+                padding: 2px;
+            }
+
+            .search-bar button[type="submit"] {
+                padding: 2px 5px;
+                font-size: 12px;
+            }
+
+            h1 {
+                font-size: 20px;
             }
         }
     </style>
@@ -190,9 +213,9 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <h1>Lista de Usuários</h1>
+                <h1 class="text-center text-md-start">Lista de Usuários</h1>
             </div>
-            <div class="col-md-6 text-end">
+            <div class="col-md-6 text-center text-md-end">
                 <a href="adicionar.php"><button class="button-background-move">Adicionar Usuário</button></a>
             </div>
         </div>
@@ -211,51 +234,53 @@
             </form>
         </div>
 
-        <table class="table table-primary table-striped">
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>Celular</th>
-                <th>Endereço</th>
-                <th>CPF</th>
-                <th>Ação</th>
-            </tr>
-            <?php
-            include 'conexao.php';
+        <div class="table-responsive">
+            <table class="table table-primary table-striped">
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Celular</th>
+                    <th>Endereço</th>
+                    <th>CPF</th>
+                    <th>Ação</th>
+                </tr>
+                <?php
+                include 'conexao.php';
 
-            if (isset($_GET['search']) && isset($_GET['filter'])) {
-                // Realizar pesquisa com base nos critérios fornecidos
-                $search = $_GET['search'];
-                $filter = $_GET['filter'];
-                $sql = "SELECT * FROM usuarios WHERE $filter LIKE '%$search%' ORDER BY nome ASC";
-            } else {
-                // Consultar usuários sem critérios de pesquisa
-                $sql = "SELECT * FROM usuarios ORDER BY nome ASC";
-            }
-
-            $result = mysqli_query($conn, $sql);
-
-            if (mysqli_num_rows($result) > 0) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                    echo "<tr>";
-                    echo "<td>" . $row["id"] . "</td>";
-                    echo "<td>" . $row["nome"] . "</td>";
-                    echo "<td>" . $row["email"] . "</td>";
-                    echo "<td>" . $row["celular"] . "</td>";
-                    echo "<td>" . $row["endereco"] . "</td>";
-                    echo "<td>" . $row["cpf"] . "</td>";
-
-                    echo "<td><a href='editar.php?id=" . $row["id"] . "' class='btn'><i class='fa fa-edit' style='font-size:48px;color:orange'></i></a> <a href='excluir.php?id=" . $row["id"] . "' class='btn'><i class='fa fa-trash-o' style='font-size:48px;color:red'></i></a></td>";
-                    echo "</tr>";
+                if (isset($_GET['search']) && isset($_GET['filter'])) {
+                    // Realizar pesquisa com base nos critérios fornecidos
+                    $search = $_GET['search'];
+                    $filter = $_GET['filter'];
+                    $sql = "SELECT * FROM usuarios WHERE $filter LIKE '%$search%' ORDER BY nome ASC";
+                } else {
+                    // Consultar usuários sem critérios de pesquisa
+                    $sql = "SELECT * FROM usuarios ORDER BY nome ASC";
                 }
-            } else {
-                echo "<tr><td colspan='7'>Nenhum usuário encontrado.</td></tr>";
-            }
 
-            mysqli_close($conn);
-            ?>
-        </table>
+                $result = mysqli_query($conn, $sql);
+
+                if (mysqli_num_rows($result) > 0) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        echo "<tr>";
+                        echo "<td>" . $row["id"] . "</td>";
+                        echo "<td>" . $row["nome"] . "</td>";
+                        echo "<td>" . $row["email"] . "</td>";
+                        echo "<td>" . $row["celular"] . "</td>";
+                        echo "<td>" . $row["endereco"] . "</td>";
+                        echo "<td>" . $row["cpf"] . "</td>";
+
+                        echo "<td><a href='editar.php?id=" . $row["id"] . "' class='btn'><i class='fa fa-edit' style='font-size:48px;color:orange'></i></a> <a href='excluir.php?id=" . $row["id"] . "' class='btn'><i class='fa fa-trash-o' style='font-size:48px;color:red'></i></a></td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='7'>Nenhum usuário encontrado.</td></tr>";
+                }
+
+                mysqli_close($conn);
+                ?>
+            </table>
+        </div>
     </div>
 </div>
 </body>

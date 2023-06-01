@@ -207,10 +207,10 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <h1>Lista de Usuários</h1>
+                <h1>Lista de Editoras</h1>
             </div>
             <div class="col-md-6 text-end">
-                <a href="adicionar.php"><button class="button-background-move">Adicionar Usuário</button></a>
+                <a href="adicionareditora.php"><button class="button-background-move">Adicionar Editora</button></a>
             </div>
         </div>
 

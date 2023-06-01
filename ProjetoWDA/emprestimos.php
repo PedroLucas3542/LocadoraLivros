@@ -115,6 +115,36 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
             background-color: #e74c3c;
         }
 
+        .search-bar {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+
+        .search-bar form {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar input[type="text"],
+        .search-bar select {
+            margin-right: 10px;
+            padding: 5px;
+        }
+
+        .search-bar button[type="submit"] {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .search-bar button[type="submit"]:hover {
+            background-color: #2980b9;
+        }
+
         @media (max-width: 768px) {
             .navbar-brand img {
                 width: 80px;
@@ -184,12 +214,37 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 </nav>
 
 <div class="fundo">
-<div class="container">
-<center><h1>Lista de Empréstimos</h1></center>
+<br><br>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1>Lista de Empréstimos</h1>
+            </div>
+            <div class="col-md-6 text-end">
+                <a href="emprestar.php"><button class="button-background-move">Efetuar Empréstimo</button></a>
+            </div>
+        </div>
 
-    <center><a href="pesquisa.php"><button type="button" class="button-background-move">Pesquisar Empréstimo</button></a> <a href="emprestar.php"><button type="button" class="button-background-move">Efetuar Empréstimo</button></a></center>
+        <div class="search-bar">
+    <form method="GET">
+        <input type="text" name="search" placeholder="Pesquisar...">
+        <select name="filter">
+            <option value="id">ID</option>
+            <option value="livro_id">ID do Livro</option>
+            <option value="livro_nome">Nome do Livro</option>
+            <option value="usuario_id">ID do Usuário</option>
+            <option value="usuario_nome">Nome do Usuário</option>
+        </select>
+        <select name="prazo_filter">
+            <option value="">Todos</option>
+            <option value="dentro">Dentro do Prazo</option>
+            <option value="atrasado">Atrasados</option>
+        </select>
+        <button type="submit">Pesquisar</button>
+    </form>
+</div>
+
     <table class="table table-striped">
-        <thead>
             <tr>
                 <th>ID</th>
                 <th>Id Livro</th>
@@ -199,15 +254,59 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                 <th>Prazo</th>
                 <th>Status</th>
             </tr>
-        </thead>
         <tbody>
             <?php
                 include 'conexao.php';
 
                 // Query SQL para selecionar os empréstimos
-                $sql = "SELECT * FROM emprestimos WHERE status = '' ORDER BY usuario_nome ASC";
+$search = '';
+$filter = '';
+$prazoFilter = '';
 
-                $result = mysqli_query($conn, $sql);
+if (isset($_GET['search']) && isset($_GET['filter'])) {
+    // Filtrar por variáveis de pesquisa
+    $search = $_GET['search'];
+    $filter = $_GET['filter'];
+}
+
+if (isset($_GET['prazo_filter'])) {
+    // Filtrar por prazo de entrega
+    $prazoFilter = $_GET['prazo_filter'];
+}
+
+// Construir a cláusula WHERE para o filtro de prazo
+$prazoWhere = '';
+if ($prazoFilter === 'dentro') {
+    $prazoWhere = "prazo_entrega >= CURDATE()";
+} elseif ($prazoFilter === 'atrasado') {
+    $prazoWhere = "prazo_entrega < CURDATE()";
+}
+
+// Construir a cláusula WHERE para o filtro de variáveis de pesquisa
+$searchWhere = '';
+if (!empty($search) && !empty($filter)) {
+    $searchWhere = "$filter LIKE '%$search%'";
+}
+
+// Construir a cláusula WHERE combinando os filtros de prazo e pesquisa
+$whereClause = '';
+if (!empty($prazoWhere) && !empty($searchWhere)) {
+    $whereClause = "($prazoWhere) AND ($searchWhere)";
+} elseif (!empty($prazoWhere)) {
+    $whereClause = $prazoWhere;
+} elseif (!empty($searchWhere)) {
+    $whereClause = $searchWhere;
+}
+
+// Consultar empréstimos de acordo com o filtro selecionado
+$sql = "SELECT * FROM emprestimos WHERE status = ''";
+if (!empty($whereClause)) {
+    $sql .= " AND $whereClause";
+}
+
+$sql .= " ORDER BY usuario_nome ASC";
+$result = mysqli_query($conn, $sql);
+
 
                 // Verifica se existem empréstimos cadastrados
                 if (mysqli_num_rows($result) > 0) {
@@ -247,9 +346,9 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         </tbody>
     </table>
                 <br>
-    <center><h2>Empréstimos Devolvidos</h2></center>
+    <center><h2>Empréstimos Devolvidos</h2></center><br>
     <table class="table table-striped">
-        <thead>
+
             <tr>
                 <th>ID</th>
                 <th>Id Livro</th>
@@ -259,7 +358,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                 <th>Prazo</th>
                 <th>Status</th>
             </tr>
-        </thead>
+        
         <tbody>
             <?php
                 include 'conexao.php';

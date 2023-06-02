@@ -5,14 +5,16 @@ include 'conexao.php';
 $id = $_GET['id'];
 
 // Verifica se o usuário possui empréstimo
-$query_verifica_emprestimo = "SELECT COUNT(*) as total FROM emprestimos WHERE usuario_id = $id WHERE status = ''";
+$query_verifica_emprestimo = "SELECT COUNT(*) as total FROM emprestimos WHERE usuario_id = $id AND status = ''";
 $resultado = mysqli_query($conn, $query_verifica_emprestimo);
 $row = mysqli_fetch_assoc($resultado);
 $total_emprestimos = $row['total'];
 
 // Verifica se o usuário possui empréstimos
 if ($total_emprestimos > 0) {
-    echo "O usuário possui empréstimos e não pode ser excluído.";
+    // Redireciona para a página de aviso
+    header('Location: aviso_emprestimo.php');
+    exit();
 } else {
     // Cria a consulta SQL para excluir o usuário do banco de dados
     $sql = "DELETE FROM usuarios WHERE id = $id";
@@ -20,6 +22,7 @@ if ($total_emprestimos > 0) {
     // Executa a consulta SQL e exibe mensagem de sucesso ou erro
     if (mysqli_query($conn, $sql)) {
         header('Location: usuarios.php');
+        exit();
     } else {
         echo "Erro ao excluir o usuário: " . mysqli_error($conn);
     }

@@ -74,29 +74,36 @@
             float: right;
             color: #007bff;
         }
+
+        @media (max-width: 767px) {
+            .container {
+                padding: 10px;
+            }
+        }
     </style>
 </head>
-<body><br><br><br><br>
+<body>
+    <br><br><br><br>
     <div class="container">
-    <a href="usuarios.php">
-    <i class="fa fa-close" style="font-size:30px"></i>
-    </a>
-		<h2>Cadastro de Usuário</h2>
+        <a href="usuarios.php">
+            <i class="fa fa-close" style="font-size:30px"></i>
+        </a>
+        <h2>Cadastro de Usuário</h2>
         <form action="add.php" method="post" accept-charset="utf-8" class="form-group" onsubmit="return validateForm()">
             <label for="nome">Nome:</label>
-            <input type="text" name="nome" class="form-control" >
+            <input type="text" name="nome" class="form-control">
             <span class="error-message"></span><br><br>	
             
             <label for="email">Email:</label>
-            <input type="email" name="email" class="form-control" >
+            <input type="email" name="email" class="form-control">
             <span class="error-message"></span><br><br>
             
             <label for="celular">Celular:</label>
-            <input type="text" id="celular" name="celular" class="form-control" >
+            <input type="text" id="celular" name="celular" class="form-control">
             <span class="error-message"></span><br><br>
             
             <label for="endereco">Endereço:</label>
-            <input type="text" name="endereco" class="form-control" >
+            <input type="text" name="endereco" class="form-control">
             <span class="error-message"></span><br><br>
             
             <label for="cpf">CPF:</label>
@@ -105,12 +112,12 @@
             
             <input type="submit" name="btn" value="Cadastrar" class="btn">
             <script>
-            $(document).ready(function() {
+                $(document).ready(function() {
                     $('#cpf').mask('000.000.000-00');
                 });
             </script>
             <script>
-            $(document).ready(function() {
+                $(document).ready(function() {
                     $('#celular').mask('(00) 00000-0000');
                 });
             </script>
